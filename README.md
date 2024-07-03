@@ -1,16 +1,12 @@
-# imago_vox
+# ImagoVox
 
-A new Flutter project.
+ImagoVox is a Flutter-based mobile application that converts images to text and provides audio playback for the converted text. Using Google ML Kit for Optical Character Recognition (OCR) and Text-to-Speech (TTS) technologies, ImagoVox offers a user-friendly platform for extracting and vocalizing text from images.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Image to Text Conversion: Upload images and get accurate text extraction using Google ML Kit.
+Text-to-Speech Playback: Listen to the converted text with natural voices.
+Multi-Language Support: Supports multiple languages for OCR and TTS.
+User-Friendly Interface: Clean, responsive design for a seamless experience.
+History Tracking: Keep a record of past conversions and audio playbacks.
+Downloadable Text and Audio: Option to download converted text and audio files.
