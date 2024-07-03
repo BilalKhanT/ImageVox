@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imago_vox/presentation/home/home_view.dart';
-
+import 'config/routes/router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,10 +13,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'ImagoVox',
-      home: HomeView(),
+    return MaterialApp.router(
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
-

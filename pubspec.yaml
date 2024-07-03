@@ -18,6 +18,9 @@ dependencies:
   equatable: ^2.0.5
   file_picker: ^8.0.6
   image: ^4.2.0
+  nb_utils: ^7.0.2
+  go_router: ^10.1.2
+  toastification: ^1.2.1
 
 dev_dependencies:
   flutter_test:
