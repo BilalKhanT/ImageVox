@@ -64,7 +64,8 @@ class ConversionViewState extends State<ConversionView>
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -85,24 +86,30 @@ class ConversionViewState extends State<ConversionView>
                                 padding: EdgeInsets.all(8.0),
                                 child: InkWell(
                                     child: Icon(
-                                      Icons.close,
-                                      color: Colors.white,
-                                    )),
+                                  Icons.close,
+                                  color: Colors.white,
+                                )),
                               ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: height * 0.02,),
-                    Text('Choose your preferred language',
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    Text(
+                      'Choose your preferred language',
                       style: TextStyle(
                         fontFamily: 'MontserratMedium',
                         fontSize: width * 0.045,
                         fontWeight: FontWeight.w400,
                         color: Colors.black,
-                      ),),
-                    SizedBox(height: height * 0.03,),
+                      ),
+                    ),
+                    SizedBox(
+                      height: height * 0.03,
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -114,9 +121,11 @@ class ConversionViewState extends State<ConversionView>
                             ),
                             child: Center(
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30.0),
                                 child: StatefulBuilder(
-                                  builder: (BuildContext context, StateSetter setState) {
+                                  builder: (BuildContext context,
+                                      StateSetter setState) {
                                     return DropdownButton<String>(
                                       dropdownColor: AppColors.warningColor,
                                       borderRadius: BorderRadius.circular(15.0),
@@ -124,13 +133,15 @@ class ConversionViewState extends State<ConversionView>
                                       items: languages.keys.map((String key) {
                                         return DropdownMenuItem<String>(
                                           value: key,
-                                          child: Text(languages[key]!,
+                                          child: Text(
+                                            languages[key]!,
                                             style: TextStyle(
                                               fontFamily: 'MontserratMedium',
                                               fontSize: width * 0.05,
                                               fontWeight: FontWeight.w600,
                                               color: Colors.black,
-                                            ),),
+                                            ),
+                                          ),
                                         );
                                       }).toList(),
                                       onChanged: (newValue) {
@@ -145,19 +156,25 @@ class ConversionViewState extends State<ConversionView>
                             ),
                           ),
                         ),
-                        const SizedBox(width: 10.0,),
+                        const SizedBox(
+                          width: 10.0,
+                        ),
                         InkWell(
                           onTap: () {
-                            context.read<ImageToTextCubit>().translateText(text, selectedLanguage);
+                            context
+                                .read<ImageToTextCubit>()
+                                .translateText(text, selectedLanguage);
                             context.pop();
                           },
-                          child: Text('Translate',
+                          child: Text(
+                            'Translate',
                             style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: width * 0.05,
                               fontWeight: FontWeight.w800,
                               color: AppColors.warningColor,
-                            ),),
+                            ),
+                          ),
                         ),
                       ],
                     ),

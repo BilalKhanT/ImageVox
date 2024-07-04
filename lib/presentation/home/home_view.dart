@@ -22,8 +22,7 @@ class HomeView extends StatelessWidget {
     if (result != null) {
       PlatformFile file = result.files.first;
       return file;
-    }
-    else {
+    } else {
       return null;
     }
   }
@@ -79,8 +78,7 @@ class HomeView extends StatelessWidget {
               ),
               CustomButton(
                 onTap: () async {
-                  final pickedFile =
-                  await ImagePicker().pickImage(
+                  final pickedFile = await ImagePicker().pickImage(
                     source: ImageSource.gallery,
                     maxWidth: 1800,
                     maxHeight: 1800,
@@ -90,9 +88,9 @@ class HomeView extends StatelessWidget {
                     if (pickedFile != null) {
                       context.read<CameraCubit>().uploadImage(pickedFile);
                       context.go(RouteNames.imgCaptureRoute);
-                    }
-                    else {
-                      AppUtils.showToast(context, 'Image Error', 'Failed to open image, please try again', true);
+                    } else {
+                      AppUtils.showToast(context, 'Image Error',
+                          'Failed to open image, please try again', true);
                     }
                   }
                 },
@@ -111,12 +109,14 @@ class HomeView extends StatelessWidget {
                   PlatformFile? pdf = await pickPdf();
                   if (pdf == null) {
                     if (context.mounted) {
-                      AppUtils.showToast(context, 'Upload Error', 'Failed to open pdf, please try again', true);
+                      AppUtils.showToast(context, 'Upload Error',
+                          'Failed to open pdf, please try again', true);
                     }
-                  }
-                  else {
+                  } else {
                     if (context.mounted) {
-                      context.read<ImageToTextCubit>().convertPdfToImageAndRecognizeText(pdf.path!);
+                      context
+                          .read<ImageToTextCubit>()
+                          .convertPdfToImageAndRecognizeText(pdf.path!);
                       context.go(RouteNames.conversionRoute);
                     }
                   }
