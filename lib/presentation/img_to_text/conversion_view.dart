@@ -39,8 +39,16 @@ class ConversionViewState extends State<ConversionView>
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
+    String selectedLanguage = 'en';
 
-    void showTranslatorModal(BuildContext context) {
+    final Map<String, String> languages = {
+      'en': 'English',
+      'es': 'Spanish',
+      'de': 'German',
+      'nl': 'Dutch',
+    };
+
+    void showTranslatorModal(BuildContext context, String text) {
       showModalBottomSheet(
           context: context,
           isScrollControlled: true,
@@ -48,11 +56,112 @@ class ConversionViewState extends State<ConversionView>
           isDismissible: false,
           builder: (BuildContext bc) {
             return Container(
-              height: height * 0.5,
+              height: height * 0.4,
               decoration: const BoxDecoration(
                 color: AppColors.btnColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () {
+                            context.pop();
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.warningColor,
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                            child: const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: InkWell(
+                                    child: Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                    )),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: height * 0.02,),
+                    Text('Choose your preferred language',
+                      style: TextStyle(
+                        fontFamily: 'MontserratMedium',
+                        fontSize: width * 0.045,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),),
+                    SizedBox(height: height * 0.03,),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: MediaQuery.sizeOf(context).height * 0.06,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              color: Colors.white,
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                                child: StatefulBuilder(
+                                  builder: (BuildContext context, StateSetter setState) {
+                                    return DropdownButton<String>(
+                                      dropdownColor: AppColors.warningColor,
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      value: selectedLanguage,
+                                      items: languages.keys.map((String key) {
+                                        return DropdownMenuItem<String>(
+                                          value: key,
+                                          child: Text(languages[key]!,
+                                            style: TextStyle(
+                                              fontFamily: 'MontserratMedium',
+                                              fontSize: width * 0.05,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                            ),),
+                                        );
+                                      }).toList(),
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          selectedLanguage = newValue!;
+                                        });
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10.0,),
+                        InkWell(
+                          onTap: () {
+                            context.read<ImageToTextCubit>().translateText(text, selectedLanguage);
+                            context.pop();
+                          },
+                          child: Text('Translate',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: width * 0.05,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.warningColor,
+                            ),),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             );
@@ -177,7 +286,7 @@ class ConversionViewState extends State<ConversionView>
                               ),
                               CustomButton(
                                   onTap: () {
-                                    showTranslatorModal(context);
+                                    showTranslatorModal(context, state.text);
                                   },
                                   text: 'Translate',
                                   btnColor: AppColors.btnColor,
