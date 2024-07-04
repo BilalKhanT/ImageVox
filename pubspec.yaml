@@ -25,6 +25,7 @@ dependencies:
   lottie: ^2.6.0
   flutter_svg: ^2.0.10+1
   image_picker: ^1.1.1
+  pdf: ^3.11.0
 
 dev_dependencies:
   flutter_test:
