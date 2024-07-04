@@ -1,6 +1,12 @@
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf_render/pdf_render.dart';
 import 'img_to_txt_state.dart';
 
 class ImageToTextCubit extends Cubit<ImageToTextState> {
@@ -28,7 +34,7 @@ class ImageToTextCubit extends Cubit<ImageToTextState> {
     try {
       final textRecognizer = TextRecognizer();
       final RecognizedText recognizedText =
-      await textRecognizer.processImage(image);
+          await textRecognizer.processImage(image);
       final String result = processRecognizedText(recognizedText);
       emit(ImageToTextLoaded(result));
     } catch (e) {
@@ -61,5 +67,42 @@ class ImageToTextCubit extends Cubit<ImageToTextState> {
     if (isSpeaking) {
       await flutterTts.stop();
     }
+  }
+
+  Future<void> convertPdfToImageAndRecognizeText(String pdfPath) async {
+    emit(PdfConversion());
+    final doc = await PdfDocument.openFile(pdfPath);
+    final pageCount = doc.pageCount;
+
+    for (int i = 1; i <= pageCount; i++) {
+      final page = await doc.getPage(i);
+      final pageImage = await page.render(
+        width: page.width.toInt(),
+        height: page.height.toInt(),
+      );
+
+      final imgFile = await saveImageFile(pageImage, i);
+      final inputImage = InputImage.fromFilePath(imgFile.path);
+      await convertImageToText(inputImage);
+
+      pageImage.dispose();
+    }
+    await doc.dispose();
+  }
+
+  Future<File> saveImageFile(PdfPageImage pageImage, int pageNumber) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final imagePath = '${directory.path}/page_$pageNumber.png';
+    final imgFile = File(imagePath);
+
+    final Uint8List imgBytes =
+        await pageImage.createImageIfNotAvailable().then((image) async {
+      final ByteData? byteData =
+          await image.toByteData(format: ImageByteFormat.png);
+      return byteData!.buffer.asUint8List();
+    });
+
+    await imgFile.writeAsBytes(imgBytes);
+    return imgFile;
   }
 }
