@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:imago_vox/config/routes/route_names.dart';
+import 'package:imago_vox/data/local/shared_pref.dart';
 import 'package:imago_vox/presentation/image/image_capture_view.dart';
 import 'package:imago_vox/presentation/img_to_text/conversion_view.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -30,5 +31,6 @@ final router = GoRouter(
       builder: (context, state) => const ConversionView(),
     ),
   ],
-  initialLocation: RouteNames.onBoardingRoute,
+  initialLocation:
+      sharedPrefs.onBoarded ? RouteNames.homeRoute : RouteNames.onBoardingRoute,
 );
