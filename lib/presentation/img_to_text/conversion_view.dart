@@ -39,6 +39,26 @@ class ConversionViewState extends State<ConversionView>
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
+
+    void showTranslatorModal(BuildContext context) {
+      showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          enableDrag: false,
+          isDismissible: false,
+          builder: (BuildContext bc) {
+            return Container(
+              height: height * 0.5,
+              decoration: const BoxDecoration(
+                color: AppColors.btnColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                ),
+              ),
+            );
+          });
+    }
+
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -138,20 +158,34 @@ class ConversionViewState extends State<ConversionView>
                           SizedBox(
                             height: height * 0.02,
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(right: height * 0.25),
-                            child: CustomButton(
-                                onTap: () {
-                                  context
-                                      .read<ImageToTextCubit>()
-                                      .textToSpeech(state.text);
-                                },
-                                text: 'Speak',
-                                btnColor: AppColors.btnColor,
-                                width: width,
-                                svgPath: 'assets/svgs/speak.svg',
-                                color: Colors.black,
-                                padding: 20.0),
+                          Row(
+                            children: [
+                              CustomButton(
+                                  onTap: () {
+                                    context
+                                        .read<ImageToTextCubit>()
+                                        .textToSpeech(state.text);
+                                  },
+                                  text: 'Speak',
+                                  btnColor: AppColors.warningColor,
+                                  width: width,
+                                  svgPath: 'assets/svgs/speak.svg',
+                                  color: Colors.white,
+                                  padding: 20.0),
+                              const SizedBox(
+                                width: 10.0,
+                              ),
+                              CustomButton(
+                                  onTap: () {
+                                    showTranslatorModal(context);
+                                  },
+                                  text: 'Translate',
+                                  btnColor: AppColors.btnColor,
+                                  width: width,
+                                  svgPath: 'assets/svgs/translate.svg',
+                                  color: Colors.black,
+                                  padding: 20.0),
+                            ],
                           ),
                         ],
                       ),
