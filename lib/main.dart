@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'config/routes/router.dart';
+import 'multi_bloc_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    MyApp(),
+    const ProvideMultiBloc(child: MyApp()),
   );
 }
 
