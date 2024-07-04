@@ -85,6 +85,31 @@ class ConversionViewState extends State<ConversionView>
                   ],
                 ),
               );
+            } else if (state is PdfConversion) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    const DotLoader(
+                      loaderColor: AppColors.btnColor,
+                    ),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    Text(
+                      'Converting pdf to image, please wait...',
+                      style: TextStyle(
+                        fontFamily: 'MontserratMedium',
+                        fontSize: width * 0.04,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white.withOpacity(0.9),
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                  ],
+                ),
+              );
             } else if (state is ImageToTextLoaded) {
               _controller?.forward(from: 0.0);
               _charCount = StepTween(begin: 0, end: state.text.length).animate(
@@ -110,18 +135,21 @@ class ConversionViewState extends State<ConversionView>
                               letterSpacing: 1.0,
                             ),
                           ),
-                          SizedBox(height: height * 0.02,),
+                          SizedBox(
+                            height: height * 0.02,
+                          ),
                           Padding(
                             padding: EdgeInsets.only(right: height * 0.25),
                             child: CustomButton(
                                 onTap: () {
-                                  context.read<ImageToTextCubit>().textToSpeech(state.text);
-
+                                  context
+                                      .read<ImageToTextCubit>()
+                                      .textToSpeech(state.text);
                                 },
                                 text: 'Speak',
                                 btnColor: AppColors.btnColor,
                                 width: width,
-                                svgPath: 'assets/svgs/scan.svg',
+                                svgPath: 'assets/svgs/speak.svg',
                                 color: Colors.black,
                                 padding: 20.0),
                           ),
@@ -133,7 +161,8 @@ class ConversionViewState extends State<ConversionView>
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(30.0)),
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(30.0)),
                         boxShadow: [
                           BoxShadow(
                             offset: const Offset(1, 3),
@@ -150,7 +179,7 @@ class ConversionViewState extends State<ConversionView>
                             animation: _charCount!,
                             builder: (BuildContext context, Widget? child) {
                               String visibleText =
-                              state.text.substring(0, _charCount!.value);
+                                  state.text.substring(0, _charCount!.value);
                               return Text(
                                 visibleText,
                                 style: TextStyle(
