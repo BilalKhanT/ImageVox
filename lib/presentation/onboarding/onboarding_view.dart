@@ -75,7 +75,7 @@ class OnBoardingView extends StatelessWidget {
                     (index) => buildDot(index, context),
                   ),
                 ),
-                InkWell(
+                GestureDetector(
                   onTap: () {
                     if (context.read<OnBoardingCubit>().currentIndex ==
                         context.read<OnBoardingCubit>().contents.length - 1) {
