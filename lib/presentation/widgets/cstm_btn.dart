@@ -8,6 +8,8 @@ class CustomButton extends StatelessWidget {
   final Color btnColor;
   final double width;
   final String svgPath;
+  final Color color;
+  final double padding;
 
   const CustomButton({
     super.key,
@@ -16,6 +18,8 @@ class CustomButton extends StatelessWidget {
     required this.btnColor,
     required this.width,
     required this.svgPath,
+    required this.color,
+    required this.padding,
   });
 
   @override
@@ -41,16 +45,18 @@ class CustomButton extends StatelessWidget {
               SvgPicture.asset(
                 svgPath,
                 // ignore: deprecated_member_use
-                color: Colors.black,
+                color: color,
+                height: 30,
+                width: 30,
               ),
-              const SizedBox(width: 40.0,),
+              SizedBox(width: padding,),
               Text(
                 text,
                 style: TextStyle(
-                  fontFamily: 'MontserratMedium',
+                  fontFamily: 'Montserrat',
                   fontSize: width * 0.05,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textColor,
+                  fontWeight: FontWeight.w800,
+                  color: color,
                   letterSpacing: 1.0,
                 ),
               ),
