@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../config/utils/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
@@ -6,6 +7,7 @@ class CustomButton extends StatelessWidget {
   final String text;
   final Color btnColor;
   final double width;
+  final String svgPath;
 
   const CustomButton({
     super.key,
@@ -13,6 +15,7 @@ class CustomButton extends StatelessWidget {
     required this.text,
     required this.btnColor,
     required this.width,
+    required this.svgPath,
   });
 
   @override
@@ -34,24 +37,25 @@ class CustomButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
           child: Row(
-              children: [
-                SvgPicture.asset(
-                  "assets/svgs/eye_scan.svg",
-                  // ignore: deprecated_member_use
-                  color: AppColors.appColor,
+            children: [
+              SvgPicture.asset(
+                svgPath,
+                // ignore: deprecated_member_use
+                color: Colors.black,
+              ),
+              const SizedBox(width: 40.0,),
+              Text(
+                text,
+                style: TextStyle(
+                  fontFamily: 'MontserratMedium',
+                  fontSize: width * 0.05,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textColor,
+                  letterSpacing: 1.0,
                 ),
-                Text(
-                  text,
-                  style: TextStyle(
-                    fontFamily: 'MontserratMedium',
-                    fontSize: width * 0.05,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.textColor,
-                    letterSpacing: 1.0,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
+          ),
         ),
       ),
     );
