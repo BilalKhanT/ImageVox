@@ -1,11 +1,12 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:imago_vox/config/utils/app_colors.dart';
 import 'package:imago_vox/logic/camera/camera_state.dart';
+import 'package:imago_vox/presentation/widgets/cstm_btn.dart';
 import 'package:imago_vox/presentation/widgets/dot_loader.dart';
 import '../../config/routes/route_names.dart';
 import '../../logic/camera/camera_cubit.dart';
@@ -30,7 +31,10 @@ class ImageCaptureView extends StatelessWidget {
                 context.go(RouteNames.homeRoute);
               }
             },
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.white,),
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
           ),
         ),
         body: SizedBox(
@@ -115,29 +119,35 @@ class ImageCaptureView extends StatelessWidget {
                     ),
                     Positioned(
                       bottom: 25,
-                      left: width * 0.1,
+                      left: width * 0.05,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButton(
-                            onPressed: () async {
-                              await context.read<CameraCubit>().initializeCamera(context);
-                            },
-                            child: Text('Recapture'),
+                          CustomButton(onTap: (){
+                            context.go(RouteNames.homeRoute);
+                          },
+                            text: 'Delete',
+                            btnColor: AppColors.warningColor,
+                            width: width,
+                            svgPath: 'assets/svgs/delete.svg',
+                            color: Colors.white,
+                          padding: 20.0,),
+                          SizedBox(
+                            width: height * 0.05,
                           ),
-                          SizedBox(width: 20),
-                          ElevatedButton(
-                            onPressed: () {
-                              // Handle proceed action
-                            },
-                            child: Text('Proceed'),
-                          ),
+                          CustomButton(onTap: (){},
+                            text: 'Scan  ',
+                            btnColor: AppColors.btnColor,
+                            width: width,
+                            svgPath: 'assets/svgs/scan.svg',
+                            color: Colors.black,
+                          padding: 20.0,),
                         ],
                       ),
                     ),
                   ],
                 );
-              }else {
+              } else {
                 return const SizedBox.shrink();
               }
             },
@@ -147,3 +157,4 @@ class ImageCaptureView extends StatelessWidget {
     );
   }
 }
+
