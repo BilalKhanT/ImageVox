@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 sealed class ImageToTextState extends Equatable {
   const ImageToTextState();
