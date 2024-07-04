@@ -123,29 +123,35 @@ class ImageCaptureView extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CustomButton(onTap: (){
-                            context.read<CameraCubit>().dispose();
-                            context.go(RouteNames.homeRoute);
-                          },
+                          CustomButton(
+                            onTap: () {
+                              context.read<CameraCubit>().dispose();
+                              context.go(RouteNames.homeRoute);
+                            },
                             text: 'Delete',
                             btnColor: AppColors.warningColor,
                             width: width,
                             svgPath: 'assets/svgs/delete.svg',
                             color: Colors.white,
-                          padding: 20.0,),
+                            padding: 20.0,
+                          ),
                           SizedBox(
                             width: height * 0.05,
                           ),
-                          CustomButton(onTap: (){
-                            context.read<ImageToTextCubit>().convertImageToText(state.image);
-                            context.go(RouteNames.conversionRoute);
-                          },
+                          CustomButton(
+                            onTap: () {
+                              context
+                                  .read<ImageToTextCubit>()
+                                  .convertImageToText(state.image);
+                              context.go(RouteNames.conversionRoute);
+                            },
                             text: 'Scan  ',
                             btnColor: AppColors.btnColor,
                             width: width,
                             svgPath: 'assets/svgs/scan.svg',
                             color: Colors.black,
-                          padding: 20.0,),
+                            padding: 20.0,
+                          ),
                         ],
                       ),
                     ),
@@ -161,4 +167,3 @@ class ImageCaptureView extends StatelessWidget {
     );
   }
 }
-
