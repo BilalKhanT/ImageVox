@@ -14,6 +14,7 @@ class OnBoardingView extends StatelessWidget {
     double screenHeight = MediaQuery.sizeOf(context).height;
     double screenWidth = MediaQuery.sizeOf(context).width;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: BlocBuilder<OnBoardingCubit, OnBoardingState>(
           builder: (context, state) {
         if (state is OnBoardingLoaded) {
