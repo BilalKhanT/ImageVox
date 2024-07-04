@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:imago_vox/config/routes/route_names.dart';
+import 'package:imago_vox/data/local/shared_pref.dart';
 import '../../config/utils/app_colors.dart';
 import '../../logic/onboarding/onboarding_cubit.dart';
 import '../../logic/onboarding/onboarding_state.dart';
@@ -78,6 +79,7 @@ class OnBoardingView extends StatelessWidget {
                   onTap: () {
                     if (context.read<OnBoardingCubit>().currentIndex ==
                         context.read<OnBoardingCubit>().contents.length - 1) {
+                      sharedPrefs.onBoarded = true;
                       context.go(RouteNames.homeRoute);
                     }
                     context.read<OnBoardingCubit>().pageController.nextPage(
