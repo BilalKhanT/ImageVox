@@ -7,11 +7,13 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf_render/pdf_render.dart';
+import 'package:translator/translator.dart';
 import 'img_to_txt_state.dart';
 
 class ImageToTextCubit extends Cubit<ImageToTextState> {
   final FlutterTts flutterTts;
   bool isSpeaking = false;
+  final translator = GoogleTranslator();
 
   ImageToTextCubit()
       : flutterTts = FlutterTts(),
@@ -104,5 +106,11 @@ class ImageToTextCubit extends Cubit<ImageToTextState> {
 
     await imgFile.writeAsBytes(imgBytes);
     return imgFile;
+  }
+
+  Future<void> translateText(String text, String targetLanguage) async {
+    var translation = await translator.translate(text, to: targetLanguage);
+    emit(ImageToTextInitial());
+    emit(ImageToTextLoaded(translation.text));
   }
 }
