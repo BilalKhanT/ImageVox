@@ -55,6 +55,8 @@ class HomeView extends StatelessWidget {
                 btnColor: AppColors.btnColor,
                 width: width,
                 svgPath: 'assets/svgs/camera.svg',
+                color: Colors.black,
+                padding: 40.0,
               ),
               SizedBox(
                 height: height * 0.03,
@@ -82,6 +84,8 @@ class HomeView extends StatelessWidget {
                 btnColor: AppColors.btnColor,
                 width: width,
                 svgPath: 'assets/svgs/gallery.svg',
+                color: Colors.black,
+                padding: 40.0,
               ),
             ],
           ),
