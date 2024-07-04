@@ -12,6 +12,8 @@ class ImageToTextInitial extends ImageToTextState {}
 
 class ImageToTextLoading extends ImageToTextState {}
 
+class PdfConversion extends ImageToTextState {}
+
 class ImageToTextLoaded extends ImageToTextState {
   final String text;
 
