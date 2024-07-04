@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -6,11 +7,26 @@ import 'package:imago_vox/config/routes/route_names.dart';
 import 'package:imago_vox/config/utils/app_colors.dart';
 import 'package:imago_vox/config/utils/app_utils.dart';
 import 'package:imago_vox/logic/camera/camera_cubit.dart';
+import 'package:imago_vox/logic/img_to_txt/img_to_txt_cubit.dart';
 import 'package:imago_vox/presentation/widgets/cstm_btn.dart';
 import 'package:lottie/lottie.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
+
+  Future<PlatformFile?> pickPdf() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      return file;
+    }
+    else {
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +100,31 @@ class HomeView extends StatelessWidget {
                 btnColor: AppColors.btnColor,
                 width: width,
                 svgPath: 'assets/svgs/gallery.svg',
+                color: Colors.black,
+                padding: 40.0,
+              ),
+              SizedBox(
+                height: height * 0.03,
+              ),
+              CustomButton(
+                onTap: () async {
+                  PlatformFile? pdf = await pickPdf();
+                  if (pdf == null) {
+                    if (context.mounted) {
+                      AppUtils.showToast(context, 'Upload Error', 'Failed to open pdf, please try again', true);
+                    }
+                  }
+                  else {
+                    if (context.mounted) {
+                      context.read<ImageToTextCubit>().convertPdfToImageAndRecognizeText(pdf.path!);
+                      context.go(RouteNames.conversionRoute);
+                    }
+                  }
+                },
+                text: 'Upload PDF',
+                btnColor: AppColors.btnColor,
+                width: width,
+                svgPath: 'assets/svgs/pdf.svg',
                 color: Colors.black,
                 padding: 40.0,
               ),

@@ -53,8 +53,8 @@ class CustomButton extends StatelessWidget {
               Text(
                 text,
                 style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontSize: width * 0.05,
+                  fontFamily: 'MontserratMedium',
+                  fontSize: width * 0.04,
                   fontWeight: FontWeight.w800,
                   color: color,
                   letterSpacing: 1.0,

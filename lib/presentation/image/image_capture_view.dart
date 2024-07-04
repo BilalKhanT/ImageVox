@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:imago_vox/config/utils/app_colors.dart';
 import 'package:imago_vox/logic/camera/camera_state.dart';
+import 'package:imago_vox/logic/img_to_txt/img_to_txt_cubit.dart';
 import 'package:imago_vox/presentation/widgets/cstm_btn.dart';
 import 'package:imago_vox/presentation/widgets/dot_loader.dart';
 import '../../config/routes/route_names.dart';
@@ -119,11 +119,12 @@ class ImageCaptureView extends StatelessWidget {
                     ),
                     Positioned(
                       bottom: 25,
-                      left: width * 0.05,
+                      left: width * 0.07,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomButton(onTap: (){
+                            context.read<CameraCubit>().dispose();
                             context.go(RouteNames.homeRoute);
                           },
                             text: 'Delete',
@@ -135,7 +136,10 @@ class ImageCaptureView extends StatelessWidget {
                           SizedBox(
                             width: height * 0.05,
                           ),
-                          CustomButton(onTap: (){},
+                          CustomButton(onTap: (){
+                            context.read<ImageToTextCubit>().convertImageToText(state.image);
+                            context.go(RouteNames.conversionRoute);
+                          },
                             text: 'Scan  ',
                             btnColor: AppColors.btnColor,
                             width: width,
