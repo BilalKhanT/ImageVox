@@ -194,6 +194,9 @@ class ConversionViewState extends State<ConversionView>
           leading: IconButton(
             onPressed: () async {
               await context.read<ImageToTextCubit>().stopSpeech();
+              setState(() {
+                selectedLanguage = 'en';
+              });
               if (context.mounted) {
                 context.go(RouteNames.homeRoute);
               }

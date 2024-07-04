@@ -139,11 +139,14 @@ class ImageCaptureView extends StatelessWidget {
                             width: height * 0.05,
                           ),
                           CustomButton(
-                            onTap: () {
+                            onTap: () async {
                               context
                                   .read<ImageToTextCubit>()
                                   .convertImageToText(state.image);
-                              context.go(RouteNames.conversionRoute);
+                              await context.read<CameraCubit>().dispose();
+                              if (context.mounted) {
+                                context.go(RouteNames.conversionRoute);
+                              }
                             },
                             text: 'Scan  ',
                             btnColor: AppColors.btnColor,
